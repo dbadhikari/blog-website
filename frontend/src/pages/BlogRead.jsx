@@ -1,27 +1,18 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { AiOutlineLike , AiFillLike } from "react-icons/ai";
 
 const BlogRead = () => {
     const [blogData, setBlogData] = useState([])
-    const [likeData, setLikeData] = useState([])
+    const [like, setLikeData] = useState([])
     const {id}=useParams()
-    console.log(id)
-    const thisLike=likeData.filter(item=> item.postid===id)
-    console.log("this post is liked ", thisLike)
-    const liked=thisLike.length > 0
-    console.log(liked)
     const userid=localStorage.getItem("id")
     
-    const getLiked=async()=>{
-     try {
-        const req=await axios.get(`http://localhost:2000/api/like/find/${userid}`)
-        console.log(req.data)
-        setLikeData(req.data)
-     } catch (error) {
-         console.log(error.response.data.message)
-     }
-    }
+    const isLiked=like.find((items)=>items.userid===userid)
+    console.log("this person liked this post :",isLiked)
+    
+  
     
       const getData=async()=>{
             try {
@@ -31,24 +22,44 @@ const BlogRead = () => {
                 console.log(error.response.data.message)
             }
         }
-        const handelLike=async()=>{
+    const getLike=async()=>{
+        try {
+            const req=await axios.get(`http://localhost:2000/api/like/find/${id}`)
+            console.log("all user like :",req.data)
+            setLikeData(req.data)
+        } catch (error) {
+            console.log(error.response.data.message)
+        }
+    }
+        const submitLike=async()=>{
             try {
-                if(liked==true){
-                   return await axios.delete("")
-                }
-            if(liked==false){
-                return await axios.post("http://localhost:2000/api/like/create",{
-                    "postid":id,
-                    "userid":userid
+                const req=await axios.post("http://localhost:2000/api/like/create",{
+                    postid:id,
+                    userid:userid
                 })
-            }
+                console.log(req.data.message)
+                getLike()
+                
             } catch (error) {
                  console.log(error.response.data.message)
             }
         }
+        const deletLike=async()=>{
+            try {
+                const req=await axios.delete(`http://localhost:2000/api/like/delet/${isLiked._id}`)
+                console.log(req.data.message)
+                getLike()
+                
+            } catch (error) {
+                 console.log(error.response.data.message)
+            }
+        }
+        
+        
         useEffect(()=>{
             getData()
-            getLiked()
+            getLike()
+            
         },[])
   return (
     <div>
@@ -58,7 +69,8 @@ const BlogRead = () => {
         <h1>{blogData.title}</h1>
         <p>{blogData.content}</p>
         <h1>{blogData.author}</h1>
-        {liked ? <button className='p-2 px-5 bg-green-300 active:scale-90'>Liked</button> :<button className='p-2 px-5 bg-green-300 active:scale-90'>Like</button>  }
+        <h1>{like.length}</h1>
+       {isLiked ? <button onClick={deletLike} ><AiFillLike size={35}/></button> :  <button onClick={submitLike} ><AiOutlineLike size={35}/></button>}
     </div>
   )
 }

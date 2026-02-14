@@ -21,21 +21,21 @@ const nav=useNavigate()
     
     },[])
   return (
-    <div className='h-screen w-full flex flex-col gap-5 pt-5 overflow-y-auto'>
+    <div className='h-screen w-full grid grid-cols-3 gap-5  pt-5 p-20 overflow-y-auto'>
       {blogs.map((elem,idx)=>{
-        return <div key={idx} className=' w-full h-[40vh] flex justify-center'>
-        <div className=' w-1/3'>
-        <img className='h-full w-full object-cover rounded-3xl' src={elem.image} alt="img" />
+        return <div key={idx} className=' h-[50vh] bg-gray-100 '>
+        <div className=' h-[30vh]'>
+        <img className='h-full w-full object-cover ' src={elem.image} alt="img" />
         </div>
-        <div className=' h-full w-2/4 p-5'>
-        <h1 className='text-2xl font-bold'>{elem.title}</h1>
-        <h2 className='font-extralight pb-5'>{elem.category}</h2>
-        <p>{elem.content.split(" ").slice(1,45).join(" ")} .... </p>
+        <div className='  p-2'>
+        <h1 className='font-bold'>{elem.title} <span className='bold text-gray-400 text-sm'>{elem.category}</span></h1>
+        
+        <p className='font-light'>{elem.content.split(" ").slice(1,15).join(" ")} .... </p>
         <button
         onClick={()=>{
           nav(`/read/${elem._id}`)
         }}
-        className='bg-green-300 p-2 px-3 rounded-xl mt-5 active:scale-95'>Read More..</button>
+        className='bg-green-300 p-1 text-xl px-2 mt-6 relative left-25 rounded-xl  active:scale-95'>Read More..</button>
         </div>
       </div>
 

@@ -31,7 +31,7 @@ const Login = () => {
                     if(req.data.user.role=="admin"){
                         nav("/admin/dashboard")
                     }else{
-                       nav("/profile/profileuser") 
+                       nav("/") 
                     }
                     
                 } catch (error) {
