@@ -12,6 +12,14 @@ export const createLike=async(req,res)=>{
         res.status(400).json({message:"error saving liked post "})
     }
 }
+export const findAllLiked = async (req, res) => {
+  try {
+    const data = await liked.find();  
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json({ message: "error finding liked posts" });
+  }
+};
 export const findLiked = async (req, res) => {
   try {
     console.log(req.params)
@@ -22,6 +30,8 @@ export const findLiked = async (req, res) => {
     res.status(400).json({ message: "error finding liked posts" });
   }
 };
+
+
 export const deletLike=async(req,res)=>{
   try {
     console.log(req.params)
