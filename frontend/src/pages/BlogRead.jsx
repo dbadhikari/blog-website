@@ -69,9 +69,12 @@ const BlogRead = () => {
         <h1>{blogData.title}</h1>
         <p>{blogData.content}</p>
         <h1>{blogData.author}</h1>
-        <h1>{like.length}</h1>
+        <div className='flex items-center gap-2'>
+     <h1 className='text-3xl'>{like.length}</h1>
        {isLiked ? <button onClick={deletLike} ><AiFillLike size={35}/></button> :  <button onClick={submitLike} ><AiOutlineLike size={35}/></button>}
-    </div>
+    
+        </div>
+   </div>
   )
 }
 
