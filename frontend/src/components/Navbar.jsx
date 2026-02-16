@@ -11,7 +11,6 @@ const Navbar = () => {
     const role=localStorage.getItem("role")
     const dispatch=useDispatch()
     const userDetails=localStorage.getItem("username")
-    console.log("this is user details :",userDetails)
     const handlelogout=async()=>{
         try {
             const req= await axios.post("http://localhost:2000/api/user/logout",{},{withCredentials:true})
