@@ -14,6 +14,8 @@ import UsersAdmin from "./pages/UsersAdmin";
 import ProfileUser from "./pages/ProfileUser";
 import Liked from "./pages/Liked";
 import BlogRead from "./pages/BlogRead";
+import AddBlogForm from "./pages/AddBlogForm";
+import AdminCategory from "./pages/AdminCategory";
 
 const App = () => {
   return (
@@ -25,6 +27,7 @@ const App = () => {
         <Route path="/read/:id" element={<BlogRead/>}/>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        
         <Route element={<PrivateRouting />}>
          <Route path="/liked" element={<Liked />} />
          <Route path="/profileuser" element={<ProfileUser />} />
@@ -34,7 +37,10 @@ const App = () => {
             <Route path="dashboard" element={<DashboardAdmin />} />
             <Route path="blogs" element={<BlogAdmin />} />
             <Route path="users" element={<UsersAdmin />} />
+            <Route path="category" element={<AdminCategory/>}/>
+            
           </Route>
+          <Route path="/blogform" element={<AddBlogForm/>}/>
         </Route>
       </Routes>
     </div>

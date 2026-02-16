@@ -2,6 +2,7 @@ import blog from "../model/blogSchema.js";
 
 export const createBlog=async(req,res)=>{
     try {
+        console.log("this is frontend data ",req.body)
         const {title,content,category,author}=req.body
         if(!title || !content  || !category || !author){
             return  res.status(400).json({message:"enter all details"})

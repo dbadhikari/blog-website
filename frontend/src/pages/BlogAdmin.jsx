@@ -2,9 +2,11 @@ import React from 'react'
 import axios from "axios"
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const BlogAdmin = () => {
   const [blogs, setBlogs] = useState([])
+  const nav=useNavigate()
       const getData=async()=>{
          try {
           const req=await axios.get("http://localhost:2000/api/blog/find")
@@ -19,6 +21,10 @@ const BlogAdmin = () => {
     },[])
   return (
     <div className='h-full w-full  p-10'>
+    <button onClick={()=>{
+      nav("/blogform")
+    }} className='p-3 bg-green-400 m-3 active:scale-90'>Add Blog</button>
+
      <table className='w-full'>
       <thead className='border' >
         <tr className='' >

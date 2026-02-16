@@ -8,10 +8,10 @@ const BlogRead = () => {
     const [like, setLikeData] = useState([])
     const {id}=useParams()
     const userid=localStorage.getItem("id")
-    
+     const usertoken=localStorage.getItem("token")
     const isLiked=like.find((items)=>items.userid===userid)
     console.log("this person liked this post :",isLiked)
-    
+    const nav=useNavigate()
   
     
       const getData=async()=>{
@@ -33,6 +33,12 @@ const BlogRead = () => {
     }
         const submitLike=async()=>{
             try {
+                if(!usertoken){
+                    alert("please login to like")
+                    nav("/login")
+                        return;
+                    
+                }
                 const req=await axios.post("http://localhost:2000/api/like/create",{
                     postid:id,
                     userid:userid
@@ -64,14 +70,14 @@ const BlogRead = () => {
   return (
     <div>
         <h3>{blogData.createdAt}</h3>
-        <h1>{blogData.category}</h1>
+        <h1 className="capitalize">{blogData.category}</h1>
         <img src={blogData.image} alt="img" />
         <h1>{blogData.title}</h1>
         <p>{blogData.content}</p>
         <h1>{blogData.author}</h1>
         <div className='flex items-center gap-2'>
      <h1 className='text-3xl'>{like.length}</h1>
-       {isLiked ? <button onClick={deletLike} ><AiFillLike size={35}/></button> :  <button onClick={submitLike} ><AiOutlineLike size={35}/></button>}
+       {isLiked ? <button className='cursor-pointer' onClick={deletLike} ><AiFillLike size={35} color="#3a98f6"/></button> :  <button className='cursor-pointer' onClick={submitLike} ><AiOutlineLike size={35}/></button>}
     
         </div>
    </div>

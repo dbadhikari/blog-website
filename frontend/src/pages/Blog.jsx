@@ -3,12 +3,18 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineLike , AiFillLike } from "react-icons/ai";
+import { FaSearch } from "react-icons/fa";
+import { Field, Form, Formik } from 'formik';
 
 
 const Blog = () => {
    const [blogs, setBlogs] = useState([])
    const [allliked, setAllLiked] = useState([])
-  //  const eachLike=allliked.filter((items)=> itmms.postid===id)
+   const currentuserid=localStorage.getItem("id")
+   
+   console.log("user:",currentuserid)
+   const usertoken=localStorage.getItem("token")
+
   
 const nav=useNavigate()
       const getData=async()=>{
@@ -29,29 +35,7 @@ const nav=useNavigate()
             console.log(error.response.data.message)
         }
     }
-        const submitLike=async()=>{
-            try {
-                const req=await axios.post("http://localhost:2000/api/like/create",{
-                    postid:id,
-                    userid:userid
-                })
-                console.log(req.data.message)
-                getLike()
-                
-            } catch (error) {
-                 console.log(error.response.data.message)
-            }
-        }
-        const deletLike=async()=>{
-            try {
-                const req=await axios.delete(`http://localhost:2000/api/like/delet/${isLiked._id}`)
-                console.log(req.data.message)
-                getLike()
-                
-            } catch (error) {
-                 console.log(error.response.data.message)
-            }
-        }
+       
 
     useEffect(()=>{
       getData()
@@ -59,34 +43,92 @@ const nav=useNavigate()
     
     },[])
   return (
-    <div className='h-screen w-full grid grid-cols-3 gap-5  pt-5 p-20 overflow-y-auto'>
+    <div className='h-screen w-full '>
+      <div className='w-full flex flex-col items-center'>
+        <h4 className='text-sm text-gray-500 my-2'>OUR BLOGS</h4>
+        <h1 className='text-4xl my-2'>Find Our All Blogs From Here</h1>
+        <p className='max-w-3xl text-center text-md text-gray-600 my-2'>our blogs are written from very research research and well known writers writers so that  we can provide you the best blogs and articles articles for you to read them all along</p>
+      </div>
+      <div className='w-full  flex justify-center mt-5'>
+        <Formik initialValues={{name:""}}
+        onSubmit={(value)=>{
+          console.log(value)
+        }}>
+        <Form className='flex  items-center gap-2 relative h-10 w-1/3 '>
+          <Field name="name" type="text" placeholder="Search..." className="outline h-full w-full rounded-2xl pl-5"/>
+          <button className='absolute right-2 h-10 w-10 flex justify-center items-center'><FaSearch size={25} /></button>
+        </Form>
+
+        </Formik>
+       
+      </div >
+      <div className='grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 gap-5  pt-15 p-20 overflow-y-auto'>
       {blogs.map((elem,idx)=>{
-        return <div key={idx} className=' h-[50vh] bg-gray-100 '>
-        <div className=' h-[30vh]'>
-        <img className='h-full w-full object-cover ' src={elem.image} alt="img" />
+        const findLiked=allliked.filter((items)=>items.postid===elem._id )
+    
+        const isLikedByUser=allliked.find((items)=>items.userid===currentuserid && items.postid===elem._id)
+        console.log(isLikedByUser)
+        return <div key={idx} >
+        <div className=' h-[360px]'>
+        <img className='h-full w-full object-cover rounded-3xl ' src={elem.image} alt="img" />
         </div>
-        <div className='  p-2'>
-        <h1 className='font-bold'>{elem.title} <span className='bold text-gray-400 text-sm'>{elem.category}</span></h1>
+        <div className='pt-5'>
+        <h1 className='capitalize'>{elem.category}<span className='bold text-gray-400 text-sm pl-5'>{elem.createdAt.split("T")[0]}</span></h1>
+        <h1 className='font-bold py-5'>{elem.title} </h1>
         
-        <p className='font-light'>{elem.content.split(" ").slice(1,15).join(" ")} .... </p>
-        <div className="flex  justify-between px-10 mt-5 ">
-          <div className="flex items-center gap-2">
-            <button className="" ><AiOutlineLike size={35}/></button>
-            <h1 className="text-2xl">1</h1>
-            </div>
-        
-        <button
+        <p className='font-light text-md text-gray-600 '>{elem.content.split(" ").slice(1,25).join(" ")} .... </p>
+        <div className="flex items-center justify-between  mt-5 ">
+          <button
         onClick={()=>{
           nav(`/read/${elem._id}`)
         }}
-        className='bg-green-300 p-2 text-xl  rounded active:scale-95'>Read More..</button>
+        className='cursor-pointer text-md font-bold text-[#7c4ee4] underline rounded active:scale-95'>Read More...</button>
+        
+          <div className="flex items-center gap-2 pr-10">
+            
+            <button 
+            className='cursor-pointer'
+            onClick={async()=>{
+              if(!usertoken) {
+                alert("please login to like")
+                nav("/login")
+                return;
+              }
+              if(isLikedByUser){
+               try {
+                const req=await axios.delete(`http://localhost:2000/api/like/delet/${isLikedByUser._id}`)
+                console.log(req.data.message)
+                getLike()
+                
+            } catch (error) {
+                 console.log(error.response.data.message)
+            }
+        
+
+              }else{
+                try {
+                const req=await axios.post("http://localhost:2000/api/like/create",{
+                    postid:elem._id,
+                    userid:currentuserid
+                })
+                console.log(req.data.message)
+                getLike()
+                
+            } catch (error) {
+                 console.log(error.response.data.message)
+            }
+              }
+            }}>{isLikedByUser? <AiFillLike size={35} color="#3a98f6"/> : <AiOutlineLike size={35}/>}</button>
+            <h1 className="text-2xl">{findLiked.length}</h1>
+            </div>
+        
         
         </div>
         </div>
       </div>
 
       })}
-      
+      </div>
       </div>
   )
 }

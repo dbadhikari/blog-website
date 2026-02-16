@@ -28,6 +28,7 @@ const Login = () => {
                     }))
                     localStorage.setItem("role",req.data.user.role)
                     localStorage.setItem("id",req.data.user._id)
+                    localStorage.setItem("username",req.data.user.name)
                     if(req.data.user.role=="admin"){
                         nav("/admin/dashboard")
                     }else{
