@@ -21,6 +21,7 @@ const User=createSlice({
             localStorage.removeItem("role")
             localStorage.removeItem("id")
             localStorage.removeItem("username")
+            localStorage.removeItem("image")
         }
 
     }

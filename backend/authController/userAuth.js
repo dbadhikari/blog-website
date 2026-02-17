@@ -90,3 +90,14 @@ export const logoutUser=(req,res)=>{
     }
 
 }
+
+export const updateImage=async(req,res)=>{
+    try {
+        console.log(req.params,req.file.filename)
+        const{id}=req.params
+       const data=await User.findByIdAndUpdate(id,{image:`${process.env.backend_url}/upload/${req.file.filename}`},{new:true})
+       res.status(201).json({message:"image updated"})
+    } catch (error) {
+        res.status(400).json({message:"update image error "})
+    }
+}

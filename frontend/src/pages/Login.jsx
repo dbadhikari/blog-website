@@ -29,11 +29,13 @@ const Login = () => {
                     localStorage.setItem("role",req.data.user.role)
                     localStorage.setItem("id",req.data.user._id)
                     localStorage.setItem("username",req.data.user.name)
+                    localStorage.setItem("image",req.data.user.image)
                     if(req.data.user.role=="admin"){
                         nav("/admin/dashboard")
                     }else{
                        nav("/") 
                     }
+                    window.location.reload()
                     
                 } catch (error) {
                     console.log(error.response.data.message)
