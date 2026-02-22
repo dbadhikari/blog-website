@@ -10,8 +10,13 @@ import { Field, Form, Formik } from 'formik';
 const Blog = () => {
    const [blogs, setBlogs] = useState([])
    const [allliked, setAllLiked] = useState([])
+   const [searchtern, setSearchTern] = useState("")
    const currentuserid=localStorage.getItem("id")
-   
+   const searchblog=blogs.filter(blogs=>
+    blogs.title.toLowerCase().includes(searchtern.toLocaleLowerCase()) || 
+    blogs.category.toLowerCase().includes(searchtern.toLocaleLowerCase())
+  )
+
    console.log("user:",currentuserid)
    const usertoken=localStorage.getItem("token")
 
@@ -54,16 +59,21 @@ const nav=useNavigate()
         onSubmit={(value)=>{
           console.log(value)
         }}>
+          {({setFieldValue})=>(
         <Form className='flex  items-center gap-2 relative h-10 w-1/3 '>
-          <Field name="name" type="text" placeholder="Search..." className="outline h-full w-full rounded-2xl pl-5"/>
+          <Field name="name" type="text" value={searchtern} placeholder="Search..."
+          onChange={(e)=>{setFieldValue("name",e.target.value);
+            setSearchTern(e.target.value)
+          }}
+          className="outline h-full w-full rounded-2xl pl-5"/>
           <button className='absolute right-2 h-10 w-10 flex justify-center items-center'><FaSearch size={25} /></button>
         </Form>
-
+)}
         </Formik>
        
       </div >
       <div className='grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 gap-5  pt-15 p-20 overflow-y-auto'>
-      {blogs.map((elem,idx)=>{
+      {searchblog.length > 0? ( searchblog.map((elem,idx)=>{
         const findLiked=allliked.filter((items)=>items.postid===elem._id )
     
         const isLikedByUser=allliked.find((items)=>items.userid===currentuserid && items.postid===elem._id)
@@ -127,7 +137,10 @@ const nav=useNavigate()
         </div>
       </div>
 
-      })}
+      }) ):(<h1 className="text-center text-gray-500 text-2xl mt-10 relative left-80">
+    No blogs available
+  </h1> )}
+     
       </div>
       </div>
   )

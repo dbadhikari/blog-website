@@ -68,13 +68,19 @@ const BlogRead = () => {
             
         },[])
   return (
-    <div>
-        <h3>{blogData.createdAt}</h3>
+    <div className='flex flex-col items-center p-10'>
+        <button className='p-2 rounded-3xl absolute left-10 px-5 border'
+        onClick={()=>{
+            nav(-1)
+        }}
+        >Back</button>
+        <img className='h-[80vh] w-[80vh]' src={blogData.image} alt="img" />
+        <h3>{blogData.createdAt ? blogData.createdAt.split("T")[0] : "Date not available"}</h3>
         <h1 className="capitalize">{blogData.category}</h1>
-        <img src={blogData.image} alt="img" />
-        <h1>{blogData.title}</h1>
+        
+        <h1 className='text-2xl'>{blogData.title}</h1>
         <p>{blogData.content}</p>
-        <h1>{blogData.author}</h1>
+        <h1>Author : {blogData.author}</h1>
         <div className='flex items-center gap-2'>
      <h1 className='text-3xl'>{like.length}</h1>
        {isLiked ? <button className='cursor-pointer' onClick={deletLike} ><AiFillLike size={35} color="#3a98f6"/></button> :  <button className='cursor-pointer' onClick={submitLike} ><AiOutlineLike size={35}/></button>}
