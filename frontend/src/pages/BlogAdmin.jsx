@@ -3,13 +3,13 @@ import axios from "axios"
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const BlogAdmin = () => {
   const [blogs, setBlogs] = useState([])
   const nav=useNavigate()
       const getData=async()=>{
          try {
-          const req=await axios.get("http://localhost:2000/api/blog/find")
+          const req=await axios.get(`${baseURL}/api/blog/find`)
            console.log(req.data)
            setBlogs(req.data)
          } catch (error) {

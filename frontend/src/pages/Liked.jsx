@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const Liked = () => {
   const [alllikedata , setallLikeData] = useState([])
   const [userlikedetails, setuserLikeDetails] = useState([])
@@ -11,7 +11,7 @@ const Liked = () => {
   const nav=useNavigate()
    const getLike=async()=>{
         try {
-            const req=await axios.get(`http://localhost:2000/api/like/findall`)
+            const req=await axios.get(`${baseURL}/api/like/findall`)
             console.log("all user like :",req.data)
             setallLikeData(req.data)
         } catch (error) {
@@ -24,7 +24,7 @@ const Liked = () => {
         if(thisUserLiked.length===0) return;
 
         const result=await Promise.all(
-          thisUserLiked.map((elem)=>axios.get(`http://localhost:2000/api/blog/findbyid/${elem.postid}`))
+          thisUserLiked.map((elem)=>axios.get(`${baseURL}/api/blog/findbyid/${elem.postid}`))
         )
         setuserLikeDetails(result.map((res)=>res.data))
         console.log("this is data",result.map((res)=>res.data))

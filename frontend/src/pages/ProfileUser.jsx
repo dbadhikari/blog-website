@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const ProfileUser = () => {
     const [userData, setUserData] = useState([])
@@ -10,7 +10,7 @@ const ProfileUser = () => {
     console.log(id)
     const getData=async()=>{
         try {
-            const req=await axios.get(`http://localhost:2000/api/user/findbyid/${id}`)
+            const req=await axios.get(`${baseURL}/api/user/findbyid/${id}`)
             console.log(req.data)
             setUserData(req.data)
         } catch (error) {
@@ -43,7 +43,7 @@ const ProfileUser = () => {
                    const  formData=new FormData()
                 formData.append("image",value.image)
 
-                const req=await axios.put(`http://localhost:2000/api/user/image/${id}`,formData,{withCredentials:true})
+                const req=await axios.put(`${baseURL}/api/user/image/${id}`,formData,{withCredentials:true})
                 console.log(req.data.message)
                 getData()
                 window.location.reload()

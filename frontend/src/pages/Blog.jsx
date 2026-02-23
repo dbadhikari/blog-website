@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
 import { Field, Form, Formik } from "formik";
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [allLiked, setAllLiked] = useState([]);
@@ -19,7 +19,7 @@ const Blog = () => {
   // Fetch blogs with pagination and search
   const getData = async () => {
     try {
-      const req = await axios.get("http://localhost:2000/api/blog/find", {
+      const req = await axios.get(`${baseURL}/api/blog/find`, {
         params: {
           page,
           limit: 3,
@@ -37,7 +37,7 @@ const Blog = () => {
   // Fetch likes
   const getLike = async () => {
     try {
-      const req = await axios.get("http://localhost:2000/api/like/findall");
+      const req = await axios.get(`${baseURL}/api/like/findall`);
       setAllLiked(req.data);
     } catch (error) {
       console.log(error.response?.data?.message);
@@ -139,10 +139,10 @@ const Blog = () => {
                           }
                           if (isLikedByUser) {
                             await axios.delete(
-                              `http://localhost:2000/api/like/delet/${isLikedByUser._id}`
+                              `${baseURL}/api/like/delet/${isLikedByUser._id}`
                             );
                           } else {
-                            await axios.post("http://localhost:2000/api/like/create", {
+                            await axios.post(`${baseURL}/api/like/create`, {
                               postid: elem._id,
                               userid: currentUserId,
                             });

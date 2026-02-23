@@ -7,6 +7,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../redux/features/userSlice'
 import { ToastContainer, toast } from 'react-toastify';
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const Login = () => {
     const nav=useNavigate()
     const dispatch=useDispatch()
@@ -21,7 +22,7 @@ const Login = () => {
                 console.log(value)
                 try {
     
-                    const req=await axios.post("http://localhost:2000/api/user/login",value,{withCredentials:true})
+                    const req=await axios.post(`${baseURL}/api/user/login`,value,{withCredentials:true})
                     console.log(req.data.message)
                     dispatch(setUser({
                         user:req.data.user,

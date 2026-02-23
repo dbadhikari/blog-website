@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const AdminCategory = () => {
           const [categorydata, setCategoryData] = useState([])
     const getData=async()=>{
         try {
-            const req=await axios.get("http://localhost:2000/api/category/find")
+            const req=await axios.get(`${baseURL}/api/category/find`)
             setCategoryData(req.data)
         } catch (error) {
             console.log(error)
@@ -24,7 +24,7 @@ const AdminCategory = () => {
         onSubmit={async(value)=>{
             console.log(value)
             try {
-                const req=await axios.post("http://localhost:2000/api/category/create",value,{withCredentials:true})
+                const req=await axios.post(`${baseURL}/api/category/create`,value,{withCredentials:true})
                 console.log(req.data.message)
                 getData()
             } catch (error) {

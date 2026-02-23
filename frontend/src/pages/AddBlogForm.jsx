@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
+
 import { useNavigate } from 'react-router-dom'
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const AddBlogForm = () => {
     const nav=useNavigate()
@@ -21,7 +23,7 @@ const AddBlogForm = () => {
                formData.append("author",value.author)
                formData.append("image",value.image)
                
-               const req=await axios.post("http://localhost:2000/api/blog/create",formData,{
+               const req=await axios.post(`${baseURL}/api/blog/create`,formData,{
                 withCredentials:true
                })
                console.log(req.data.message)

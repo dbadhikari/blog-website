@@ -2,13 +2,13 @@ import React from 'react'
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const UsersAdmin = () => {
   const [users, setUsers] = useState([])
 
   const getData=async()=>{
     try {
-      const req=await axios.get("http://localhost:2000/api/user/find")
+      const req=await axios.get(`${baseURL}/api/user/find`)
       console.log(req.data)
       setUsers(req.data)
     } catch (error) {

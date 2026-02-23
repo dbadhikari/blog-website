@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AiOutlineLike , AiFillLike } from "react-icons/ai";
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const BlogRead = () => {
     const [blogData, setBlogData] = useState([])
     const [like, setLikeData] = useState([])
@@ -16,7 +16,7 @@ const BlogRead = () => {
     
       const getData=async()=>{
             try {
-                const req=await axios.get(`http://localhost:2000/api/blog/findbyid/${id}`)
+                const req=await axios.get(`${baseURL}/api/blog/findbyid/${id}`)
                 setBlogData(req.data)
             } catch (error) {
                 console.log(error.response.data.message)
@@ -24,7 +24,7 @@ const BlogRead = () => {
         }
     const getLike=async()=>{
         try {
-            const req=await axios.get(`http://localhost:2000/api/like/find/${id}`)
+            const req=await axios.get(`${baseURL}/api/like/find/${id}`)
             console.log("all user like :",req.data)
             setLikeData(req.data)
         } catch (error) {
@@ -39,7 +39,7 @@ const BlogRead = () => {
                         return;
                     
                 }
-                const req=await axios.post("http://localhost:2000/api/like/create",{
+                const req=await axios.post(`${baseURL}/api/like/create`,{
                     postid:id,
                     userid:userid
                 })
@@ -52,7 +52,7 @@ const BlogRead = () => {
         }
         const deletLike=async()=>{
             try {
-                const req=await axios.delete(`http://localhost:2000/api/like/delet/${isLiked._id}`)
+                const req=await axios.delete(`${baseURL}/api/like/delet/${isLiked._id}`)
                 console.log(req.data.message)
                 getLike()
                 

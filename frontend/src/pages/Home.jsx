@@ -7,7 +7,7 @@ import {Navigation,Pagination,Autoplay} from "swiper/modules"
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { AiOutlineLike , AiFillLike } from "react-icons/ai";
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const Home = () => {
 const [blogs, setBlogs] = useState([])
 const [allliked, setAllLiked] = useState([])
@@ -18,7 +18,7 @@ const usertoken = localStorage.getItem("token");
 const nav=useNavigate()
       const getData=async()=>{
          try {
-          const req=await axios.get("http://localhost:2000/api/blog/find")
+          const req=await axios.get(`${baseURL}/api/blog/find`)
            console.log(req.data.data)
            setBlogs(req.data.data)
          } catch (error) {
@@ -27,7 +27,7 @@ const nav=useNavigate()
       }
        const getLike=async()=>{
         try {
-            const req=await axios.get(`http://localhost:2000/api/like/findall`)
+            const req=await axios.get(`${baseURL}/api/like/findall`)
             console.log("all user like :",req.data)
             setAllLiked(req.data)
         } catch (error) {
@@ -120,7 +120,7 @@ const nav=useNavigate()
               }
               if(isLikedByUser){
                try {
-                const req=await axios.delete(`http://localhost:2000/api/like/delet/${isLikedByUser._id}`)
+                const req=await axios.delete(`${baseURL}/api/like/delet/${isLikedByUser._id}`)
                 console.log(req.data.message)
                 getLike()
                 
@@ -131,7 +131,7 @@ const nav=useNavigate()
 
               }else{
                 try {
-                const req=await axios.post("http://localhost:2000/api/like/create",{
+                const req=await axios.post(`${baseURL}/api/like/create`,{
                     postid:elem._id,
                     userid:currentuserid
                 })

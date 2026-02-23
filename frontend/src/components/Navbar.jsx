@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { setlogout } from '../redux/features/userSlice'
 import { RiLogoutBoxRLine } from "react-icons/ri";
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const Navbar = () => {
 
@@ -13,7 +14,7 @@ const Navbar = () => {
     console.log(id)
     const getData=async()=>{
         try {
-            const req=await axios.get(`http://localhost:2000/api/user/findbyid/${id}`)
+            const req=await axios.get(`${baseURL}/api/user/findbyid/${id}`)
             console.log(req.data)
             setUserData(req.data)
         } catch (error) {
@@ -33,7 +34,7 @@ const Navbar = () => {
     console.log(userimage)
     const handlelogout=async()=>{
         try {
-            const req= await axios.post("http://localhost:2000/api/user/logout",{},{withCredentials:true})
+            const req= await axios.post(`${baseURL}/api/user/logout`,{},{withCredentials:true})
             console.log(req.data.message)
             dispatch(setlogout())
             

@@ -1,13 +1,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const DashboardAdmin = () => {
     const [blogs, setBlogs] = useState([])
     const [users, setUsers] = useState([])
     
         const getData=async()=>{
            try {
-            const req=await axios.get("http://localhost:2000/api/blog/find")
+            const req=await axios.get(`${baseURL}/api/blog/find`)
              console.log(req.data)
              setBlogs(req.data)
            } catch (error) {
@@ -18,7 +18,7 @@ const DashboardAdmin = () => {
 
   const getuser=async()=>{
     try {
-      const req=await axios.get("http://localhost:2000/api/user/find")
+      const req=await axios.get(`${baseURL}/api/user/find`)
       console.log(req.data)
       setUsers(req.data)
     } catch (error) {

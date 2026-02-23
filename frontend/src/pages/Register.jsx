@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import bg_image from "../assets/bg_img.avif"
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const Register = () => {
     
     const nav=useNavigate()
@@ -24,7 +25,7 @@ const Register = () => {
                 fromData.append("image",value.image)
                 fromData.append("role",value.role)
 
-                const req=await axios.post("http://localhost:2000/api/user/create",fromData,{withCredentials:true})
+                const req=await axios.post(`${baseURL}/api/user/create`,fromData,{withCredentials:true})
                 console.log(req.data.message)
                 toast(req.data.message + " Redirecting to login ...")
                  setTimeout(()=>{
