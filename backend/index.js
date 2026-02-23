@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 connectdb()
 const frontend={
-    origin:"http://localhost:5173",
+    origin:"https://blog-website-1-yee3.onrender.com",
     credentials:true
 }
 app.use(cookieParser())
