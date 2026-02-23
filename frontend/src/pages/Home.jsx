@@ -19,8 +19,8 @@ const nav=useNavigate()
       const getData=async()=>{
          try {
           const req=await axios.get("http://localhost:2000/api/blog/find")
-           console.log(req.data)
-           setBlogs(req.data)
+           console.log(req.data.data)
+           setBlogs(req.data.data)
          } catch (error) {
           console.log(error.response.data.message)
          }
@@ -87,7 +87,7 @@ const nav=useNavigate()
          <h1 className='text-4xl font-bold my-5 text-center'>Our Latest Blogs</h1>
          <h3 className='text-3xl font-bold mt-3 text-center'>Travel, read, explore — the world is yours.</h3>
         <div className='grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 gap-5  pt-15 p-20 overflow-y-auto'>
-        {blogs.slice(0,3).map((elem,idx)=>{
+        {blogs.map((elem,idx)=>{
           const findLiked=allliked.filter((items)=>items.postid===elem._id )
     
         const isLikedByUser=allliked.find((items)=>items.userid===currentuserid && items.postid===elem._id)

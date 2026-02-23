@@ -3,8 +3,9 @@ import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import bg_image from "../assets/bg_img.avif"
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
 const Register = () => {
-    const [first, setfirst] = useState("")
+    
     const nav=useNavigate()
   return (
     <div className='h-screen w-full relative' >
@@ -25,7 +26,7 @@ const Register = () => {
 
                 const req=await axios.post("http://localhost:2000/api/user/create",fromData,{withCredentials:true})
                 console.log(req.data.message)
-                setfirst(req.data.message + " Redirecting to login ...")
+                toast(req.data.message + " Redirecting to login ...")
                  setTimeout(()=>{
                     nav("/login")
                 },2000)
@@ -33,10 +34,8 @@ const Register = () => {
                
             } catch (error) {
                 console.log(error.response.data.message)
-                setfirst(error.response.data.message)
-                setTimeout(()=>{
-                    setfirst("")
-                },2000)
+                toast(error.response.data.message)
+                
             }
         }}>
             <Form className='flex flex-col gap-10 py-15 w-1/3 border p-5  text-white backdrop-blur-md rounded-2xl'>
@@ -44,10 +43,11 @@ const Register = () => {
                 <Field name="email" type="email" placeholder="email" className="outline h-10 rounded-xl pl-5"/>
                 <Field name="password" type="password" placeholder="****" className="outline h-10 rounded-xl pl-5"/>
                 <button type='submit' className='outline h-10 rounded-xl active:scale-90'>Create</button>
-                {first && <h1>{first}</h1>}
+                
             </Form>
         </Formik>
         </div>
+        <ToastContainer/>
     </div>
   )
 }

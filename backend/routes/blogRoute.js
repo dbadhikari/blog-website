@@ -7,5 +7,6 @@ const blogRoute=express.Router()
 blogRoute.post("/create",Upload.single("image") ,createBlog)
 blogRoute.get("/find",blogFind)
 blogRoute.get("/findbyid/:id",blogFindbyid)
+// blogRoute.post("/search",searchBlog)
 
 export default blogRoute

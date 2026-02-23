@@ -6,6 +6,7 @@ import { Field, Form, Formik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../redux/features/userSlice'
+import { ToastContainer, toast } from 'react-toastify';
 const Login = () => {
     const nav=useNavigate()
     const dispatch=useDispatch()
@@ -39,6 +40,7 @@ const Login = () => {
                     
                 } catch (error) {
                     console.log(error.response.data.message)
+                    toast(error.response.data.message)
                 }
             }}>
                 <Form className='flex flex-col gap-10 pt-15 w-1/3 border p-5  text-white backdrop-blur-md rounded-2xl'>
@@ -49,6 +51,7 @@ const Login = () => {
                 </Form>
             </Formik>
             </div>
+            <ToastContainer/>
         </div>
   )
 }
