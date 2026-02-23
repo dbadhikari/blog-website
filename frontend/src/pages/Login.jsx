@@ -33,7 +33,7 @@ const Login = () => {
                     localStorage.setItem("username",req.data.user.name)
                     localStorage.setItem("image",req.data.user.image)
                     if(req.data.user.role=="admin"){
-                        nav("/admin/dashboard")
+                        nav("/admin")
                     }else{
                        nav("/") 
                     }
