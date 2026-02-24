@@ -9,7 +9,8 @@ const BlogAdmin = () => {
   const nav=useNavigate()
       const getData=async()=>{
          try {
-           const req=await axios.get(`${baseURL}/api/blog/find`)
+          console.log("here it is working")
+           const req = await axios.get(`${baseURL}/api/blog/find`)
            console.log("this is backend data comming ",req.data)
            setBlogs(req.data || [])
          } catch (error) {
