@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 const DashboardAdmin = () => {
-    const [blogs, setBlogs] = useState([])
+    const [blogs, setBlogs] = useState(0)
     const [users, setUsers] = useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [page, setPage] = useState(1);
@@ -15,8 +15,8 @@ const DashboardAdmin = () => {
           search: searchTerm, // send search term
         },
       });
-             console.log("blog data",req.data.totalPages)
-             setBlogs(req.data.totalPages)
+             console.log("blog data",req.data.totalItems)
+             setBlogs(req.data.totalItems)
            } catch (error) {
             console.log(error.response.data.message)
            }
@@ -39,7 +39,7 @@ const DashboardAdmin = () => {
   return (
     <div>
       <h1>Total Users:{users.length}</h1>
-      <h1>Total Blogs:{blogs.length}</h1>
+      <h1>Total Blogs:{blogs}</h1>
       update in process...
 
     </div>
