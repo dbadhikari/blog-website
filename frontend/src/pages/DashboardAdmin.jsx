@@ -4,12 +4,13 @@ const baseURL = import.meta.env.VITE_BACKEND_URL;
 const DashboardAdmin = () => {
     const [blogs, setBlogs] = useState([])
     const [users, setUsers] = useState([])
-    
+    const [searchTerm, setSearchTerm] = useState("");
+    const [page, setPage] = useState(1);
         const getData=async()=>{
            try {
             const req = await axios.get(`${baseURL}/api/blog/find`, {
         params: {
-          page:1,
+          page,
           limit: 3,
           search: searchTerm, // send search term
         },

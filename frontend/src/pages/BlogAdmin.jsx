@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 const BlogAdmin = () => {
   const [blogs, setBlogs] = useState([])
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const nav=useNavigate()
       const getData=async()=>{
          try {
@@ -13,7 +15,7 @@ const BlogAdmin = () => {
            
            const req = await axios.get(`${baseURL}/api/blog/find`, {
         params: {
-          page:1,
+          page,
           limit: 3,
           search: searchTerm, // send search term
         },
