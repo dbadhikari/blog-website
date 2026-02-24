@@ -14,8 +14,8 @@ const DashboardAdmin = () => {
           search: searchTerm, // send search term
         },
       });
-             console.log(req.data.totalPages)
-             setBlogs(req.data)
+             console.log("blog data",req.data.totalPages)
+             setBlogs(req.data.totalPages)
            } catch (error) {
             console.log(error.response.data.message)
            }
