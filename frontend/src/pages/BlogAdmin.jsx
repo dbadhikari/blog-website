@@ -43,7 +43,7 @@ const BlogAdmin = () => {
           <td>{elem.title}</td>
           <td>{elem.category}</td>
           <td>{elem.author}</td>
-          <td>{elem.createdAt.split("T")[0]}</td>
+          <td>{ elem.createdAt?.split("T")[0]}</td>
           <td><button>Edit</button><button>Delet</button></td>
         </tr>
       })}
