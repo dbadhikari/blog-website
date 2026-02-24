@@ -9,9 +9,9 @@ const BlogAdmin = () => {
   const nav=useNavigate()
       const getData=async()=>{
          try {
-          const req=await axios.get(`${baseURL}/api/blog/find`)
-           console.log(req.data)
-           setBlogs(req.data)
+           const req=await axios.get(`${baseURL}/api/blog/find`)
+           console.log("this is backend data comming ",req.data)
+           setBlogs(req.data || [])
          } catch (error) {
           console.log(error.response.data.message)
          }
@@ -37,7 +37,7 @@ const BlogAdmin = () => {
         </tr>
       </thead>
       <tbody >
-         {blogs.map((elem,idx)=>{
+         {(blogs || []).map((elem,idx)=>{
        return  <tr key={idx} >
           <td className='h-30'> <img className='h-25 w-25' src={elem.image} alt="img" /> </td>
           <td>{elem.title}</td>
