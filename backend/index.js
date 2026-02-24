@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 connectdb()
 const frontend={
-    origin:"https://blog-website-1-yee3.onrender.com",
+    origin:"https://blognewweb.netlify.app",
     credentials:true
 }
 app.use(cookieParser())
