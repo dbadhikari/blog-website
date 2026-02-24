@@ -10,7 +10,14 @@ const BlogAdmin = () => {
       const getData=async()=>{
          try {
           console.log("here it is working")
-           const req = await axios.get(`${baseURL}/api/blog/find`)
+           
+           const req = await axios.get(`${baseURL}/api/blog/find`, {
+        params: {
+          page,
+          limit: 3,
+          search: searchTerm, // send search term
+        },
+      });
            console.log("this is backend data comming ",req.data)
            setBlogs(req.data || [])
          } catch (error) {

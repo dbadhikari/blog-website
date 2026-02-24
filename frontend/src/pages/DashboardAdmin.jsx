@@ -7,8 +7,14 @@ const DashboardAdmin = () => {
     
         const getData=async()=>{
            try {
-            const req=await axios.get(`${baseURL}/api/blog/find`)
-             console.log(req.data)
+            const req = await axios.get(`${baseURL}/api/blog/find`, {
+        params: {
+          page,
+          limit: 3,
+          search: searchTerm, // send search term
+        },
+      });
+             console.log(req.data.totalPages)
              setBlogs(req.data)
            } catch (error) {
             console.log(error.response.data.message)
