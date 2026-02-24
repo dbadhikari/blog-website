@@ -13,7 +13,7 @@ const BlogAdmin = () => {
            
            const req = await axios.get(`${baseURL}/api/blog/find`, {
         params: {
-          page,
+          page:1,
           limit: 3,
           search: searchTerm, // send search term
         },
